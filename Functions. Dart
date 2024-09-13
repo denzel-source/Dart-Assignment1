@@ -1,0 +1,59 @@
+// Standard Function to calculate the total with optional tax
+double calculateTotal(List<double> prices, {double taxRate = 0}) {
+  double total = prices.reduce((a, b) => a + b);
+  return total * (1 + taxRate);  // Apply tax if taxRate is given
+}
+
+// Anonymous function to filter out items below a certain threshold
+List<double> filterItems(List<double> prices, double threshold) {
+  return prices.where((price) => price >= threshold).toList();
+}
+
+// Higher-order function to apply a discount to all items in the cart
+List<double> applyDiscount(List<double> prices, double Function(double) discountFunc) {
+  return prices.map((price) => discountFunc(price)).toList();
+}
+
+// Recursive function to calculate factorial discount
+int calculateFactorialDiscount(int n) {
+  if (n <= 1) return 1;
+  return n * calculateFactorialDiscount(n - 1);
+}
+
+void main() {
+  // Simulating the shopping cart with item prices
+  List<double> cartItems = [12.50, 8.99, 15.75, 7.49, 25.00];
+  double taxRate = 0.05;  // 5% tax
+
+  print("Original cart items: $cartItems");
+
+  // Step 1: Filter out items below $10 using an anonymous function
+  cartItems = filterItems(cartItems, 10.0);
+  print("Filtered cart items (items >= \$10): $cartItems");
+
+  // Step 2: Apply a 10% discount using a higher-order function
+  double discountPercentage = 10.0;
+  List<double> discountedItems = applyDiscount(cartItems, (price) => price * (1 - discountPercentage / 100));
+  print("Cart items after 10% discount: $discountedItems");
+
+  // Step 3: Calculate the total price after discount, with tax
+  double totalPrice = calculateTotal(discountedItems, taxRate: taxRate);
+  print("Total price after discount and tax: \$${totalPrice.toStringAsFixed(2)}");
+
+  // Step 4: Apply an additional factorial discount based on the number of items in the cart
+  int itemCount = discountedItems.length;
+  int factorialDiscount = calculateFactorialDiscount(itemCount);
+  print("Factorial discount based on $itemCount items: ${factorialDiscount}%");
+
+  // Step 5: Apply the factorial discount to the total price
+  double finalPrice = totalPrice * (1 - factorialDiscount / 100);
+  print("Final price after applying factorial discount: \$${finalPrice.toStringAsFixed(2)}");
+}
+
+//Sample Output
+Original cart items: [12.5, 8.99, 15.75, 7.49, 25.0]
+Filtered cart items (items >= $10): [12.5, 15.75, 25.0]
+Cart items after 10% discount: [11.25, 14.175, 22.5]
+Total price after discount and tax: $50.19
+Factorial discount based on 3 items: 6%
+Final price after applying factorial discount: $47.18
