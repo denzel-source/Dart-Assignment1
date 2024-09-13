@@ -1,0 +1,164 @@
+//Encapsulation:
+class BankAccount {
+  // Private variable - encapsulated data
+  String _accountHolder;
+  double _balance;
+
+  // Constructor
+  BankAccount(this._accountHolder, this._balance);
+
+  // Getter for account holder
+  String getAccountHolder() {
+    return _accountHolder;
+  }
+
+  // Getter for balance
+  double getBalance() {
+    return _balance;
+  }
+
+  // Method to deposit money
+  void deposit(double amount) {
+    if (amount > 0) {
+      _balance += amount;
+      print("Deposited \$${amount.toStringAsFixed(2)}. New balance: \$${_balance.toStringAsFixed(2)}");
+    } else {
+      print("Invalid deposit amount.");
+    }
+  }
+
+  // Method to withdraw money
+  void withdraw(double amount) {
+    if (amount > 0 && amount <= _balance) {
+      _balance -= amount;
+      print("Withdrew \$${amount.toStringAsFixed(2)}. Remaining balance: \$${_balance.toStringAsFixed(2)}");
+    } else {
+      print("Insufficient funds or invalid amount.");
+    }
+  }
+}
+
+void main() {
+  // Testing encapsulation
+  BankAccount myAccount = BankAccount("Alice", 1000.0);
+  print("Account Holder: ${myAccount.getAccountHolder()}");
+  print("Initial Balance: \$${myAccount.getBalance()}");
+
+  myAccount.deposit(250.0);
+  myAccount.withdraw(100.0);
+}
+
+//Inheritance: Superclass
+class Vehicle {
+  String brand;
+  int year;
+
+  Vehicle(this.brand, this.year);
+
+  void startEngine() {
+    print("$brand vehicle is starting its engine.");
+  }
+}
+
+// Subclass (Inheritance)
+class Car extends Vehicle {
+  int doors;
+
+  Car(String brand, int year, this.doors) : super(brand, year);
+
+  void honkHorn() {
+    print("$brand car is honking its horn!");
+  }
+}
+
+void main() {
+  // Testing inheritance
+  Car myCar = Car("Toyota", 2020, 4);
+  print("Brand: ${myCar.brand}, Year: ${myCar.year}, Doors: ${myCar.doors}");
+  myCar.startEngine();
+  myCar.honkHorn();
+}
+
+// Polymorphism:Superclass
+class Animal {
+  void makeSound() {
+    print("Animal makes a sound.");
+  }
+}
+
+// Subclass (Method Overriding)
+class Dog extends Animal {
+  @override
+  void makeSound() {
+    print("Dog barks.");
+  }
+}
+
+// Subclass (Method Overriding)
+class Cat extends Animal {
+  @override
+  void makeSound() {
+    print("Cat meows.");
+  }
+}
+
+void main() {
+  // Testing polymorphism
+  Animal genericAnimal = Animal();
+  Dog dog = Dog();
+  Cat cat = Cat();
+
+  genericAnimal.makeSound();  // Outputs: Animal makes a sound.
+  dog.makeSound();            // Outputs: Dog barks.
+  cat.makeSound();            // Outputs: Cat meows.
+}
+
+//Abstraction: Abstract class
+abstract class Shape {
+  double area();
+  double perimeter();
+}
+
+// Subclass that implements abstract methods
+class Circle extends Shape {
+  double radius;
+
+  Circle(this.radius);
+
+  @override
+  double area() {
+    return 3.14 * radius * radius;
+  }
+
+  @override
+  double perimeter() {
+    return 2 * 3.14 * radius;
+  }
+}
+
+// Subclass that implements abstract methods
+class Rectangle extends Shape {
+  double length, width;
+
+  Rectangle(this.length, this.width);
+
+  @override
+  double area() {
+    return length * width;
+  }
+
+  @override
+  double perimeter() {
+    return 2 * (length + width);
+  }
+}
+
+void main() {
+  // Testing abstraction
+  Circle circle = Circle(5.0);
+  Rectangle rectangle = Rectangle(4.0, 6.0);
+
+  print("Circle Area: ${circle.area()}, Perimeter: ${circle.perimeter()}");
+  print("Rectangle Area: ${rectangle.area()}, Perimeter: ${rectangle.perimeter()}");
+}
+
