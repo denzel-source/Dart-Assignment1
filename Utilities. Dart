@@ -1,0 +1,172 @@
+//String Manipulation
+void stringManipulation(String input) {
+  // String Concatenation
+  String concatenated = input + " is a great string!";
+  print("Concatenation: $concatenated");
+
+  // String Interpolation
+  print("Interpolation: The input is: $input");
+
+  // Substring Extraction
+  String substring = input.length > 5 ? input.substring(0, 5) : input;
+  print("Substring (first 5 characters): $substring");
+
+  // Case Conversion
+  print("Uppercase: ${input.toUpperCase()}");
+  print("Lowercase: ${input.toLowerCase()}");
+
+  // Reversing the String
+  String reversed = input.split('').reversed.join('');
+  print("Reversed: $reversed");
+
+  // Length of the String
+  print("Length: ${input.length}");
+}
+
+// Collections: Lists, Sets, Maps
+void collectionDemo() {
+  // List
+  List<String> itemList = ['Apple', 'Banana', 'Orange'];
+  itemList.add('Grape');
+  itemList.remove('Banana');
+  print("List: $itemList");
+
+  // Set (removes duplicates automatically)
+  Set<String> itemSet = {'Apple', 'Banana', 'Orange', 'Apple'};
+  itemSet.add('Grape');
+  itemSet.remove('Banana');
+  print("Set: $itemSet");
+
+  // Map
+  Map<String, int> itemMap = {'Apple': 2, 'Banana': 5, 'Orange': 3};
+  itemMap['Grape'] = 10;
+  itemMap.remove('Banana');
+  print("Map: $itemMap");
+
+  // Iterating through collections
+  print("\nIterating through List:");
+  for (var item in itemList) {
+    print(item);
+  }
+
+  print("\nIterating through Set:");
+  for (var item in itemSet) {
+    print(item);
+  }
+
+  print("\nIterating through Map:");
+  itemMap.forEach((key, value) {
+    print('$key: $value');
+  });
+}
+
+// File Handling (with Error Handling)
+import 'dart:io';
+
+void fileHandlingDemo() {
+  String inputFilePath = 'input.txt';
+  String outputFilePath = 'output.txt';
+
+  try {
+    // Reading from a file
+    String content = File(inputFilePath).readAsStringSync();
+    print("File content from $inputFilePath: \n$content");
+
+    // Writing to another file
+    File(outputFilePath).writeAsStringSync("This is the new content.\n");
+    print("Written new content to $outputFilePath");
+  } catch (e) {
+    print("Error during file operations: $e");
+  }
+}
+
+//Date and Time Manipulation
+void dateTimeDemo() {
+  // Get the current date and time
+  DateTime now = DateTime.now();
+  print("Current Date and Time: $now");
+
+  // Formatting the date
+  String formattedDate = "${now.day}-${now.month}-${now.year}";
+  print("Formatted Date: $formattedDate");
+
+  // Add/Subtract days
+  DateTime futureDate = now.add(Duration(days: 7));
+  DateTime pastDate = now.subtract(Duration(days: 30));
+  print("Future Date (+7 days): $futureDate");
+  print("Past Date (-30 days): $pastDate");
+
+  // Calculate difference between two dates
+  Duration difference = futureDate.difference(now);
+  print("Difference between now and future date: ${difference.inDays} days");
+}
+
+//Combining All Utilities into a Small Application
+import 'dart:io';
+
+void main() {
+  // Step 1: String Manipulation
+  print("Enter a string for manipulation:");
+  String userInput = stdin.readLineSync() ?? '';
+
+  stringManipulation(userInput);
+
+  // Step 2: Store results in a collection
+  List<String> manipulatedResults = [];
+  manipulatedResults.add("Original: $userInput");
+  manipulatedResults.add("Uppercase: ${userInput.toUpperCase()}");
+  manipulatedResults.add("Reversed: ${userInput.split('').reversed.join('')}");
+  manipulatedResults.add("Length: ${userInput.length}");
+
+  // Step 3: Log the date and time for each entry
+  DateTime now = DateTime.now();
+  manipulatedResults.add("Entry logged on: $now");
+
+  // Step 4: Save data to a file
+  String outputFilePath = 'log.txt';
+  try {
+    File(outputFilePath).writeAsStringSync(manipulatedResults.join('\n') + '\n');
+    print("Data successfully saved to $outputFilePath");
+  } catch (e) {
+    print("Error writing to file: $e");
+  }
+
+  // Step 5: Show collection demo and date manipulation
+  collectionDemo();
+  dateTimeDemo();
+}
+
+//Sample Output:
+Enter a string for manipulation:
+Hello World
+Concatenation: Hello World is a great string!
+Interpolation: The input is: Hello World
+Substring (first 5 characters): Hello
+Uppercase: HELLO WORLD
+Lowercase: hello world
+Reversed: dlroW olleH
+Length: 11
+Data successfully saved to log.txt
+List: [Apple, Orange, Grape]
+Set: {Apple, Orange, Grape}
+Map: {Apple: 2, Orange: 3, Grape: 10}
+
+Iterating through List:
+Apple
+Orange
+Grape
+
+Iterating through Set:
+Apple
+Orange
+Grape
+
+Iterating through Map:
+Apple: 2
+Orange: 3
+Grape: 10
+Current Date and Time: 2024-09-13 14:45:12.849426
+Formatted Date: 13-9-2024
+Future Date (+7 days): 2024-09-20 14:45:12.849426
+Past Date (-30 days): 2024-08-14 14:45:12.849426
+Difference between now and future date: 7 days
